@@ -4,24 +4,82 @@ import { Gasto } from "@/interfaces/gasto.interface";
 import DeleteButton from "./DeleteButton";
 import { deleteGasto } from "../../actions";
 import toast, { Toaster } from "react-hot-toast";
-import { useState } from "react";
+import { useOptimistic, useState } from "react";
 import CreatePopup from "../create-popup/CreatePopup";
 import UpdatePopup from "../update-popup/UpdatePopup";
 import formatDate from "@/utils/formatDate";
 
+export interface OptimisticGasto extends Gasto {
+  optimistic?: boolean;
+}
+
 const Table = ({ data }: { data: { gastos: Gasto[] } }) => {
+  const [optimisticGastos, updateOptimisticGastos] = useOptimistic<
+    OptimisticGasto[],
+    {
+      type: string;
+      payload: any;
+    }
+  >(data.gastos, (state, action: { type: string; payload: any }) => {
+    switch (action.type) {
+      case "ADD":
+        return [
+          ...state,
+          {
+            ...action.payload,
+            _id: Math.random().toString(), // Generar un ID temporal si es necesario
+          },
+        ];
+      case "REMOVE":
+        return state.filter((gasto) => gasto._id !== action.payload._id);
+      case "UPDATE":
+        return state.map((gasto) =>
+          gasto._id === action.payload._id
+            ? { ...gasto, ...action.payload.updates }
+            : gasto
+        );
+      default:
+        return state;
+    }
+  });
   const [showCreatePopup, setShowCreatePopup] = useState(false);
   const [showUpdatePopup, setShowUpdatePopup] = useState(false);
   const [selectedGasto, setSelectedGasto] = useState<Gasto | null>(null);
 
+  // Función para agregar un gasto optimísticamente
+  const handleAddGasto = (newGasto: Gasto) => {
+    updateOptimisticGastos({ type: "ADD", payload: newGasto });
+  };
+
+  // Función para eliminar un gasto optimísticamente
+  const handleRemoveGasto = (idToRemove: string) => {
+    updateOptimisticGastos({ type: "REMOVE", payload: { _id: idToRemove } });
+  };
+
+  const handleUpdateGasto = (idToUpdate: string, updates: Gasto) => {
+    updateOptimisticGastos({
+      type: "UPDATE",
+      payload: { _id: idToUpdate, updates },
+    });
+  };
+
   return (
     <>
       {showCreatePopup && (
-        <CreatePopup onClose={() => setShowCreatePopup(false)} />
+        <CreatePopup
+          addOptimistic={(gasto) => {
+            setShowCreatePopup(false);
+            handleAddGasto(gasto);
+          }}
+          onClose={() => setShowCreatePopup(false)}
+        />
       )}
 
       {showUpdatePopup && selectedGasto && (
         <UpdatePopup
+          updateOptimistic={(gasto) => {
+            handleUpdateGasto(gasto._id, gasto);
+          }}
           gasto={selectedGasto}
           onClose={() => setShowUpdatePopup(false)}
         />
@@ -53,7 +111,7 @@ const Table = ({ data }: { data: { gastos: Gasto[] } }) => {
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-200 font-medium">
-              {data.gastos
+              {optimisticGastos
                 .sort(
                   (a, b) =>
                     new Date(b.createdAt).getTime() -
@@ -74,27 +132,35 @@ const Table = ({ data }: { data: { gastos: Gasto[] } }) => {
                       <td className="px-4 py-6 text-right  border-y border-gray-300">
                         <div className="w-full flex gap-4 justify-end items-center">
                           <button
+                            disabled={gasto.optimistic}
                             onClick={() => {
                               setSelectedGasto(gasto);
                               setShowUpdatePopup(true);
                             }}
-                            className="mr-2 text-sm basis-[50%] text-center"
+                            className="mr-2 text-sm basis-[50%] flex items-center justify-center"
                           >
-                            Editar
+                            {gasto.optimistic ? (
+                              <div className="h-2.5 rounded-full bg-gray-700 w-14 animate-pulse"></div>
+                            ) : (
+                              "Editar"
+                            )}
                           </button>
-                          <form
-                            className="basis-[30%] flex items-center justify-center"
-                            action={async () => {
-                              const response = await deleteGasto(gasto._id);
-                              if (response?.error) {
-                                toast.error(response.error);
-                              } else {
-                                toast.success("Gasto eliminado exitosamente");
-                              }
-                            }}
-                          >
-                            <DeleteButton />
-                          </form>
+                          {gasto.optimistic ? (
+                            <div className="h-2.5 rounded-full bg-gray-700 w-20 animate-pulse"></div>
+                          ) : (
+                            <form
+                              className="basis-[30%] flex items-center justify-center"
+                              action={async () => {
+                                handleRemoveGasto(gasto._id);
+                                const response = await deleteGasto(gasto._id);
+                                if (response?.error) {
+                                  toast.error(response.error);
+                                }
+                              }}
+                            >
+                              <DeleteButton />
+                            </form>
+                          )}
                         </div>
                       </td>
                     </tr>

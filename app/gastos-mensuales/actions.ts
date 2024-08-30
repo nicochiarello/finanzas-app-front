@@ -3,7 +3,6 @@
 import { revalidatePath } from "next/cache";
 
 export async function createGasto(formData: FormData) {
-  await new Promise((resolve) => setTimeout(resolve, 1000));
   const response = await fetch("http://localhost:8080/api/gastos/create", {
     method: "POST",
     body: JSON.stringify({
@@ -26,7 +25,6 @@ export async function createGasto(formData: FormData) {
 }
 
 export async function deleteGasto(id: string) {
-  await new Promise((resolve) => setTimeout(resolve, 1000));
   const response = await fetch(
     `http://localhost:8080/api/gastos/${id}/delete`,
     {
@@ -47,7 +45,6 @@ export async function updateGasto(
   id: string,
   updatedGasto: Record<string, any>
 ) {
-  await new Promise((resolve) => setTimeout(resolve, 1000));
   const response = await fetch(
     `http://localhost:8080/api/gastos/${id}/update`,
     {

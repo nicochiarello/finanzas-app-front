@@ -1,10 +1,19 @@
 "use client";
 
+import { Gasto } from "@/interfaces/gasto.interface";
 import { createGasto } from "../../actions";
 import CreateButton from "./CreateButton";
 import toast from "react-hot-toast";
+import { on } from "events";
+import { OptimisticGasto } from "../gastos-table/Table";
 
-const CreatePopup = ({ onClose }: { onClose: () => void }) => {
+const CreatePopup = ({
+  onClose,
+  addOptimistic,
+}: {
+  onClose: () => void;
+  addOptimistic: (gasto: OptimisticGasto) => void;
+}) => {
   return (
     <div className="w-full h-full popup-container-bg absolute top-0 left-0 flex items-center justify-center">
       <div className="w-[45rem] h-[35rem] flex flex-col bg-white rounded-lg">
@@ -19,15 +28,26 @@ const CreatePopup = ({ onClose }: { onClose: () => void }) => {
           <form
             action={async (formData: FormData) => {
               const response = await createGasto(formData);
-              console.log(response);
 
               if (response?.error) {
                 toast.error(response.error);
                 onClose();
                 return;
+              } else {
+                addOptimistic({
+                  _id: Math.random().toString(),
+                  optimistic: true,
+                  title: formData.get("title") as string,
+                  value: Number(formData.get("value")),
+                  createdAt:
+                    (formData.get("date") as string) ||
+                    new Date().toISOString(),
+                  updatedAt:
+                    (formData.get("date") as string) ||
+                    new Date().toISOString(),
+                });
               }
 
-              toast.success("Gasto creado exitosamente");
               onClose();
             }}
             className="flex flex-col justify-between w-full"
@@ -37,12 +57,14 @@ const CreatePopup = ({ onClose }: { onClose: () => void }) => {
                 type="text"
                 name="title"
                 placeholder="Titulo"
+                required
                 className="p-2 border rounded-lg"
               />
               <input
                 type="number"
                 placeholder="Monto"
                 name="value"
+                required
                 className="p-2 border rounded-lg"
               />
               <input

@@ -3,15 +3,15 @@
 import { Gasto } from "@/interfaces/gasto.interface";
 import { useState } from "react";
 import toast from "react-hot-toast";
-import { ClipLoader } from "react-spinners";
 import { updateGasto } from "../../actions";
-import { on } from "events";
 import UpdateButton from "./UpdateButton";
 
 const UpdatePopup = ({
+  updateOptimistic,
   gasto,
   onClose,
 }: {
+  updateOptimistic: (gasto: Gasto) => void;
   gasto: Gasto;
   onClose: () => void;
 }) => {
@@ -31,6 +31,7 @@ const UpdatePopup = ({
           <form
             className="flex flex-col justify-between w-full"
             action={async () => {
+              updateOptimistic(data);
               const response = await updateGasto(gasto._id, data);
 
               if (response?.error) {
@@ -39,7 +40,6 @@ const UpdatePopup = ({
                 return;
               }
 
-              toast.success("Gasto actualizado exitosamente");
               onClose();
             }}
           >
