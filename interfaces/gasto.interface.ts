@@ -1,7 +1,5 @@
 export interface Gasto {
-    _id: {
-        $oid: string
-    },
+    _id: string,
     title: string,
     value: number,
     createdAt: string

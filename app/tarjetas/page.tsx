@@ -46,12 +46,10 @@ export default async function Page() {
           {data.tarjetas.map((tarjeta) => (
             <tr key={tarjeta._id.$oid}>
               <td className="px-4 py-6 h-fit border-y border-gray-300">
-                {new Date(tarjeta.createdAt).toLocaleDateString('es-Ar')}
+                {new Date(tarjeta.createdAt).toLocaleDateString("es-Ar")}
               </td>
               <td className="px-4 py-6  border-y border-gray-300">
-                {
-                  tarjetaHandler(tarjeta.brand)
-                }
+                {tarjetaHandler(tarjeta.brand)}
               </td>
               <td className="px-4 py-6  border-y border-gray-300">
                 {tarjeta.entity}
