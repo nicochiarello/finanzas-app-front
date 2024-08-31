@@ -5,9 +5,7 @@ export enum Brand {
   }
 
 export interface Tarjeta {
-    _id: {
-        $oid: string
-    },
+    _id: string,
     brand: Brand,
     entity: string,
     createdAt: string
