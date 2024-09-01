@@ -1,59 +1,34 @@
-import { type Cuota } from "@/interfaces/cuota.interface";
+import { Metadata } from "next";
+import { Tarjeta } from "@/interfaces/tarjeta.interface";
+import { Cuota } from "@/interfaces/cuota.interface";
+import CuotasPage from "./components/CuotasPage";
 
-const getData = async (): Promise<{ cuotas: Cuota[]; items: number }> => {
-  const response = await fetch("http://localhost:8080/api/cuotas/all", {
-    cache: "no-cache",
-  });
-  const data = await response.json();
-  return data;
+export const metadata: Metadata = {
+  title: "Cuotas",
+  description: "Registro de tus cuotas de tarjeta de crédito",
 };
 
-const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+async function getData(): Promise<{ tarjetas: Tarjeta[]; cuotas: Cuota[] }> {
+  const getTarjetas = fetch("http://localhost:8080/api/tarjetas/all");
+  const getCuotas = fetch("http://localhost:8080/api/cuotas/all");
+
+  const [tarjetas, cuotas] = await Promise.all([getTarjetas, getCuotas]);
+
+  const data = await Promise.all([tarjetas.json(), cuotas.json()]);
+
+  return {
+    tarjetas: data[0].tarjetas,
+    cuotas: data[1].cuotas,
+  };
+}
 
 export default async function Page() {
-  await sleep(1000);
   const data = await getData();
+  console.log(data)
 
   return (
-    <div className="flex w-full h-full bg-white rounded-xl">
-      {/* table */}
-      <table className="table-auto w-full text-left h-fit">
-        <thead className="border-b-2 border-gray-200">
-          <tr>
-            <th className="px-4 py-2">Fecha</th>
-            <th className="px-4 py-2">Concepto</th>
-            <th className="px-4 py-2">Cantidad de cuotas</th>
-            <th className="px-4 py-2">Pagadas</th>
-            <th className="px-4 py-2">Restantes</th>
-            <th className="px-4 py-2 text-right">Acciones</th>
-          </tr>
-        </thead>
-        <tbody className="divide-y divide-gray-200 font-medium">
-          {data.cuotas.map((cuota) => (
-            <tr key={cuota._id.$oid}>
-              <td className="px-4 py-6  border-y border-gray-300">
-                {new Date(cuota.createdAt).toLocaleDateString('es-Ar')}
-              </td>
-              <td className="px-4 py-6  border-y border-gray-300">
-                {cuota.title}
-              </td>
-              <td className="px-4 py-6  border-y border-gray-300">
-                {cuota.value}
-              </td>
-              <td className="px-4 py-6  border-y border-gray-300">
-                {cuota.paid}
-              </td>
-              <td className="px-4 py-6  border-y border-gray-300">
-                {cuota.remaining}
-              </td>
-              <td className="px-4 py-6 text-right  border-y border-gray-300">
-                <button className="mr-2 text-sm">Editar</button>
-                <button className="text-sm">Eliminar</button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
+    <main className="flex flex-col gap-8 w-full h-full">
+      <CuotasPage data={data} />
+    </main>
   );
 }

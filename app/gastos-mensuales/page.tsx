@@ -9,7 +9,6 @@ export const metadata: Metadata = {
 };
 
 async function getData(): Promise<{ gastos: Gasto[]; items: number }> {
-  await new Promise((resolve) => setTimeout(resolve, 1000));
   const response = await fetch("http://localhost:8080/api/gastos/all");
   const data = await response.json();
   return data;
