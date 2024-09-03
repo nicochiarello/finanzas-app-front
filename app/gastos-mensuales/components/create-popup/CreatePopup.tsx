@@ -1,10 +1,8 @@
 "use client";
 
-import { Gasto } from "@/interfaces/gasto.interface";
 import { createGasto } from "../../actions";
 import CreateButton from "./CreateButton";
 import toast from "react-hot-toast";
-import { on } from "events";
 import { OptimisticGasto } from "../gastos-table/Table";
 
 const CreatePopup = ({
