@@ -7,6 +7,9 @@ import DeleteButton from "./DeleteButton";
 import { deleteServicios } from "../actions";
 import UpdatePopup from "./update-popup/UpdatePopup";
 import { Servicio } from "@/interfaces/servicio.interface";
+import DateSelector from "@/app/components/date-selector/DateSelector";
+import TotalViewer from "@/app/components/total-viewer/TotalViewer";
+import formatDate from "@/utils/formatDate";
 
 export interface OptimisticServicio extends Servicio {
   optimistic?: boolean;
@@ -43,7 +46,9 @@ const ServiciosPage = ({ data }: { data: { servicios: Servicio[] } }) => {
   });
   const [showCreatePopup, setShowCreatePopup] = useState(false);
   const [showUpdatePopup, setShowUpdatePopup] = useState(false);
-  const [selectedServicio, setSelectedServicio] = useState<Servicio | null>(null);
+  const [selectedServicio, setSelectedServicio] = useState<Servicio | null>(
+    null
+  );
 
   const handleAddServicio = (newServicio: Servicio) => {
     updateOptimisticServicios({ type: "ADD", payload: newServicio });
@@ -97,6 +102,7 @@ const ServiciosPage = ({ data }: { data: { servicios: Servicio[] } }) => {
           Agregar
         </div>
       </div>
+      <DateSelector baseHref="/servicios" />
       <div className="flex flex-1 bg-white rounded-xl shadow-xl overflow-y-scroll">
         <div className="flex w-full h-full bg-white rounded-xl">
           <table className="table-auto w-full text-left h-fit">
@@ -118,13 +124,13 @@ const ServiciosPage = ({ data }: { data: { servicios: Servicio[] } }) => {
                 .map((servicio) => (
                   <tr key={servicio._id}>
                     <td className="px-4 py-6 h-fit border-y border-gray-300">
-                      {new Date(servicio.createdAt).toLocaleDateString("es-Ar")}
+                      {formatDate(servicio.createdAt)}
                     </td>
                     <td className="px-4 py-6  border-y border-gray-300">
                       {servicio.title}
                     </td>
                     <td className="px-4 py-6  border-y border-gray-300">
-                      {servicio.value}
+                      ${servicio.value.toLocaleString('es-AR')}
                     </td>
                     <td className="px-4 py-6 text-right  border-y border-gray-300">
                       <div className="w-full flex gap-4 justify-end items-center">
@@ -149,7 +155,9 @@ const ServiciosPage = ({ data }: { data: { servicios: Servicio[] } }) => {
                             className="basis-[30%] flex items-center justify-center"
                             action={async () => {
                               handleRemoveServicio(servicio._id);
-                              const response = await deleteServicios(servicio._id);
+                              const response = await deleteServicios(
+                                servicio._id
+                              );
                               if (response?.error) {
                                 toast.error(response.error);
                               }
@@ -166,6 +174,9 @@ const ServiciosPage = ({ data }: { data: { servicios: Servicio[] } }) => {
           </table>
         </div>
       </div>
+      <TotalViewer
+        totalList={optimisticServicios.map((servicio) => servicio.value)}
+      />
     </>
   );
 };
