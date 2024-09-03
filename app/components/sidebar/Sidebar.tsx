@@ -2,10 +2,21 @@
 
 import Link from "next/link";
 import { sidebarItems } from "./items";
-import { usePathname } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
 
 export default function Sidebar() {
   const pathname = usePathname();
+  const searchParams = useSearchParams();
+
+  const month = searchParams.get("month");
+  const year = searchParams.get("year");
+
+  const handleHref = (href: string) => {
+    if (month && year) {
+      return `${href}?year=${year}&month=${month}`;
+    }
+    return href;
+  };
 
   return (
     <div className="w-[16rem] h-full flex flex-col gap-8 py-6 bg-white">
@@ -16,7 +27,7 @@ export default function Sidebar() {
             return (
               <Link
                 key={item.label}
-                href={item.href}
+                href={handleHref(item.href)}
                 className={`px-6 flex gap-6 ${
                   pathname === item.href
                     ? "bg-zinc-100 py-6 text-indigo-600"
