@@ -38,8 +38,12 @@ const CreatePopup = ({
                   optimistic: true,
                   title: formData.get("title") as string,
                   value: Number(formData.get("value")),
-                  createdAt: new Date().toISOString(),
-                  updatedAt: new Date().toISOString(),
+                  createdAt:
+                    (formData.get("date") as string) ||
+                    new Date().toISOString(),
+                  updatedAt:
+                    (formData.get("date") as string) ||
+                    new Date().toISOString(),
                 });
               }
 
