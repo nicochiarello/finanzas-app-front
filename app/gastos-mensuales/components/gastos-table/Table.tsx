@@ -8,6 +8,8 @@ import { useOptimistic, useState } from "react";
 import CreatePopup from "../create-popup/CreatePopup";
 import UpdatePopup from "../update-popup/UpdatePopup";
 import formatDate from "@/utils/formatDate";
+import DateSelector from "@/app/components/date-selector/DateSelector";
+import TotalViewer from "@/app/components/total-viewer/TotalViewer";
 
 export interface OptimisticGasto extends Gasto {
   optimistic?: boolean;
@@ -99,7 +101,9 @@ const Table = ({ data }: { data: { gastos: Gasto[] } }) => {
           Agregar
         </div>
       </div>
-      <div className="flex flex-1 bg-white rounded-xl shadow-xl overflow-y-scroll">
+      <DateSelector baseHref="/gastos-mensuales" />
+
+      <div className="flex flex-1 bg-white h-full rounded-xl shadow-xl overflow-y-scroll">
         <div className="flex w-full h-full bg-white rounded-xl">
           <table className="table-auto w-full text-left h-fit">
             <thead className="border-b-2 border-gray-200">
@@ -127,7 +131,7 @@ const Table = ({ data }: { data: { gastos: Gasto[] } }) => {
                         {gasto.title}
                       </td>
                       <td className="px-4 py-6  border-y border-gray-300">
-                        ${gasto.value}
+                        ${gasto.value.toLocaleString('es-AR')}
                       </td>
                       <td className="px-4 py-6 text-right  border-y border-gray-300">
                         <div className="w-full flex gap-4 justify-end items-center">
@@ -170,6 +174,7 @@ const Table = ({ data }: { data: { gastos: Gasto[] } }) => {
           </table>
         </div>
       </div>
+      <TotalViewer totalList={optimisticGastos.map((item) => item.value)} />
     </>
   );
 };
