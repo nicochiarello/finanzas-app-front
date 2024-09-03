@@ -8,9 +8,24 @@ export const metadata: Metadata = {
   description: "Registro de tus cuotas de tarjeta de crédito",
 };
 
-async function getData(): Promise<{ tarjetas: Tarjeta[]; cuotas: Cuota[] }> {
+async function getData(request: any): Promise<{ tarjetas: Tarjeta[]; cuotas: Cuota[] }> {
+  const { month } = request.searchParams;
+  const { year } = request.searchParams;
+
+  let getCuotas 
+
+  if (month && year) {
+    getCuotas = fetch(
+      `http://localhost:8080/api/cuotas/all?month=${month}&year=${year}`,
+      {
+        cache: "no-store",
+      }
+    );
+  } else {
+    getCuotas = fetch("http://localhost:8080/api/cuotas/all");
+  }
+
   const getTarjetas = fetch("http://localhost:8080/api/tarjetas/all");
-  const getCuotas = fetch("http://localhost:8080/api/cuotas/all");
 
   const [tarjetas, cuotas] = await Promise.all([getTarjetas, getCuotas]);
 
@@ -22,12 +37,12 @@ async function getData(): Promise<{ tarjetas: Tarjeta[]; cuotas: Cuota[] }> {
   };
 }
 
-export default async function Page() {
-  const data = await getData();
-  console.log(data)
+export default async function Page(request: any) {
+  const data = await getData(request);
+
 
   return (
-    <main className="flex flex-col gap-8 w-full h-full">
+    <main className="flex flex-col gap-3 w-full h-full">
       <CuotasPage data={data} />
     </main>
   );
