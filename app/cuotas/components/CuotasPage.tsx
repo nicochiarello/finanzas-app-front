@@ -10,6 +10,9 @@ import { deleteCuota } from "../actions";
 import UpdatePopup from "./update-popup/UpdatePopup";
 import { Cuota } from "@/interfaces/cuota.interface";
 import { tarjetaHandler } from "@/app/tarjetas/components/TarjetasPage";
+import DateSelector from "@/app/components/date-selector/DateSelector";
+import TotalViewer from "@/app/components/total-viewer/TotalViewer";
+import formatDate from "@/utils/formatDate";
 
 export interface OptimisticCuota extends Cuota {
   optimistic?: boolean;
@@ -106,6 +109,7 @@ const CuotasPage = ({
           Agregar
         </div>
       </div>
+      <DateSelector baseHref="/cuotas" />
       <div className="flex flex-1 bg-white rounded-xl shadow-xl overflow-y-scroll">
         <div className="flex w-full h-full bg-white rounded-xl">
           <table className="table-auto w-fit min-w-full text-left h-fit">
@@ -129,7 +133,7 @@ const CuotasPage = ({
                 .map((cuota) => (
                   <tr key={cuota._id}>
                     <td className="px-4 py-6 h-fit border-y border-gray-300">
-                      {new Date(cuota.createdAt).toLocaleDateString("es-Ar")}
+                      {formatDate(cuota.createdAt)}
                     </td>
                     <td className="px-4 py-6 border-y border-gray-300">
                       {cuota.title}
@@ -142,7 +146,7 @@ const CuotasPage = ({
                         : "No especificada"}
                     </td>
                     <td className="px-4 py-6 border-y border-gray-300">
-                      ${cuota.value}
+                      ${cuota.value.toLocaleString("es-AR")}
                     </td>
                     <td className="px-4 py-6 border-y border-gray-300">
                       {cuota.paid}/{cuota.qty}
@@ -187,6 +191,7 @@ const CuotasPage = ({
           </table>
         </div>
       </div>
+      <TotalViewer totalList={optimisticCuotas.map((cuota) => cuota.value)} />
     </>
   );
 };
