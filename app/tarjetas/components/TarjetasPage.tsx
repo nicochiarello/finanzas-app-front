@@ -1,18 +1,13 @@
 "use client";
 
-// import { Gasto } from "@/interfaces/gasto.interface";
-// import DeleteButton from "./DeleteButton";
-// import { deleteGasto } from "../../actions";
 import toast, { Toaster } from "react-hot-toast";
 import { useOptimistic, useState } from "react";
-// import CreatePopup from "../create-popup/CreatePopup";
-// import UpdatePopup from "../update-popup/UpdatePopup";
-// import formatDate from "@/utils/formatDate";
 import { Tarjeta } from "@/interfaces/tarjeta.interface";
 import CreatePopup from "./create-popup/CreatePopup";
 import DeleteButton from "./DeleteButton";
 import { deleteTarjeta } from "../actions";
 import UpdatePopup from "./update-popup/UpdatePopup";
+import formatDate from "@/utils/formatDate";
 
 export const tarjetaHandler = (tarjeta: number) => {
   switch (tarjeta) {
@@ -140,7 +135,7 @@ const TarjetasPage = ({ data }: { data: { tarjetas: Tarjeta[] } }) => {
                 .map((tarjeta) => (
                   <tr key={tarjeta._id}>
                     <td className="px-4 py-6 h-fit border-y border-gray-300">
-                      {new Date(tarjeta.createdAt).toLocaleDateString("es-Ar")}
+                      {formatDate(tarjeta.createdAt)}
                     </td>
                     <td className="px-4 py-6  border-y border-gray-300">
                       {tarjetaHandler(tarjeta.brand)}
