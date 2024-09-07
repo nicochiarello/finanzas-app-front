@@ -8,6 +8,7 @@ import DeleteButton from "./DeleteButton";
 import { deleteTarjeta } from "../actions";
 import UpdatePopup from "./update-popup/UpdatePopup";
 import formatDate from "@/utils/formatDate";
+import { useRouter } from "next/navigation";
 
 export const tarjetaHandler = (tarjeta: number) => {
   switch (tarjeta) {
