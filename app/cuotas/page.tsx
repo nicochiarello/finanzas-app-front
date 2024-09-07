@@ -2,56 +2,82 @@ import { Metadata } from "next";
 import { Tarjeta } from "@/interfaces/tarjeta.interface";
 import { Cuota } from "@/interfaces/cuota.interface";
 import CuotasPage from "./components/CuotasPage";
+import { cookies } from "next/headers";
 
 export const metadata: Metadata = {
   title: "Cuotas",
   description: "Registro de tus cuotas de tarjeta de crédito",
 };
 
-async function getData(
-  request: any
-): Promise<{ tarjetas: Tarjeta[]; cuotas: Cuota[] }> {
-  const { month } = request.searchParams;
-  const { year } = request.searchParams;
-  const { card } = request.searchParams;
-
-  let getCuotas;
-
-  if (month && year && card) {
-    getCuotas = fetch(
-      `http://localhost:8080/api/cuotas/all?month=${month}&year=${year}&card=${card}`,
-      {
-        cache: "no-store",
-      }
-    );
-  } else if (month && year) {
-    getCuotas = fetch(
-      `http://localhost:8080/api/cuotas/all?month=${month}&year=${year}`,
-      {
-        cache: "no-store",
-      }
-    );
-  } else if (card) {
-    getCuotas = fetch(`http://localhost:8080/api/cuotas/all?card=${card}`, {
-      cache: "no-store",
-    });
-  } else {
-    getCuotas = fetch("http://localhost:8080/api/cuotas/all", {
-      cache: "no-store",
-    });
-  }
-
-  const getTarjetas = fetch("http://localhost:8080/api/tarjetas/all");
-
-  const [tarjetas, cuotas] = await Promise.all([getTarjetas, getCuotas]);
-
-  const data = await Promise.all([tarjetas.json(), cuotas.json()]);
-
-  return {
-    tarjetas: data[0].tarjetas,
-    cuotas: data[1].cuotas,
+interface RequestParams {
+  searchParams: {
+    month?: string;
+    year?: string;
+    card?: string;
   };
 }
+
+const fetchCuotas = async (
+  url: string,
+  token: string
+): Promise<{ cuotas: Cuota[]; items: number }> => {
+  const response = await fetch(url, {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    cache: "no-store",
+  });
+
+  if (!response.ok) {
+    throw new Error("Error al cargar las cuotas");
+  }
+
+  return response.json();
+};
+
+const fetchTarjetas = async (
+  token: string
+): Promise<{ tarjetas: Tarjeta[]; items: number }> => {
+  const response = await fetch("http://localhost:8080/api/tarjetas/all", {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    cache: "no-store",
+  });
+
+  if (!response.ok) {
+    throw new Error("Error al cargar las cuotas");
+  }
+
+  return response.json();
+};
+
+const getData = async (
+  request: RequestParams
+): Promise<{
+  cuotas: Cuota[];
+  tarjetas: Tarjeta[];
+}> => {
+  const cookieStore = cookies();
+  const token = cookieStore.get("token");
+
+  const { month, year, card } = request.searchParams;
+  const baseUrl = "http://localhost:8080/api/cuotas/all";
+
+  const auxUrl =
+    month && year ? `${baseUrl}?month=${month}&year=${year}` : baseUrl;
+
+  const url = card
+    ? `${auxUrl}${auxUrl.includes("?") ? "&" : "?"}card=${card}`
+    : auxUrl;
+
+  const cuotas = await fetchCuotas(url, token?.value || "");
+  const tarjetas = await fetchTarjetas(token?.value || "");
+
+  return { cuotas: cuotas.cuotas, tarjetas: tarjetas.tarjetas };
+};
 
 export default async function Page(request: any) {
   const data = await getData(request);
