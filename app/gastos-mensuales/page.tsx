@@ -1,31 +1,53 @@
 import { type Gasto } from "@/interfaces/gasto.interface";
 import { Metadata } from "next";
 import Table from "./components/gastos-table/Table";
+import { cookies } from "next/headers";
 
 export const metadata: Metadata = {
   title: "Gastos Mensuales",
   description: "Registro de tus gastos mensuales",
 };
 
-async function getData(request: any): Promise<{ gastos: Gasto[]; items: number }> {
-  const { month } = request.searchParams;
-  const { year } = request.searchParams;
+interface RequestParams {
+  searchParams: {
+    month?: string;
+    year?: string;
+  };
+}
 
-  if (month && year) {
-    const response = await fetch(
-      `http://localhost:8080/api/gastos/all?month=${month}&year=${year}`, {
-        cache: "no-store",
-      }
-    );
-    const data = await response.json();
-    return data;
+const fetchGastos = async (
+  url: string,
+  token: string
+): Promise<{ gastos: Gasto[]; items: number }> => {
+  const response = await fetch(url, {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    cache: "no-store",
+  });
+
+  if (!response.ok) {
+    throw new Error("Error al cargar los gastos");
   }
 
-  const response = await fetch("http://localhost:8080/api/gastos/all");
-  const data = await response.json();
+  return response.json();
+};
 
-  return data;
-}
+const getData = async (
+  request: RequestParams
+): Promise<{ gastos: Gasto[]; items: number }> => {
+  const cookieStore = cookies();
+  const token = cookieStore.get("token");
+
+  const { month, year } = request.searchParams;
+  const baseUrl = "http://localhost:8080/api/gastos/all";
+
+  const url =
+    month && year ? `${baseUrl}?month=${month}&year=${year}` : baseUrl;
+
+  return await fetchGastos(url, token?.value || "");
+};
 
 export default async function Page(request: any) {
   const data = await getData(request);
