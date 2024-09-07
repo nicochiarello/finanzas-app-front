@@ -13,6 +13,7 @@ import { tarjetaHandler } from "@/app/tarjetas/components/TarjetasPage";
 import DateSelector from "@/app/components/date-selector/DateSelector";
 import TotalViewer from "@/app/components/total-viewer/TotalViewer";
 import formatDate from "@/utils/formatDate";
+import CardFilter from "./card-filter/CardFilter";
 
 export interface OptimisticCuota extends Cuota {
   optimistic?: boolean;
@@ -109,7 +110,10 @@ const CuotasPage = ({
           Agregar
         </div>
       </div>
-      <DateSelector baseHref="/cuotas" />
+      <div className="flex gap-4  items-center">
+        <DateSelector baseHref="/cuotas" />
+        <CardFilter cards={data.tarjetas} />
+      </div>
       <div className="flex flex-1 bg-white rounded-xl shadow-xl overflow-y-scroll">
         <div className="flex w-full h-full bg-white rounded-xl">
           <table className="table-auto w-fit min-w-full text-left h-fit">

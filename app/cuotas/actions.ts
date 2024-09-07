@@ -9,8 +9,8 @@ export async function createCuota(formData: FormData) {
       card: formData.get("card"),
       title: formData.get("title"),
       value: formData.get("value"),
-      paid: formData.get("paid"),
-      qty: formData.get("qty"),
+      paid: Number(formData.get("paid")),
+      qty: Number(formData.get("qty")),
       createdAt: formData.get("createdAt"),
     }),
     headers: {
