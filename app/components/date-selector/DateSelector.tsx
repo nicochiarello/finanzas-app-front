@@ -16,6 +16,8 @@ const DateSelector = ({ baseHref }: { baseHref: string }) => {
   const month = searchParams.get("month") || "";
   const year = searchParams.get("year") || "";
 
+  const params = new URLSearchParams(searchParams.toString());
+
   useEffect(() => {
     let date = null;
 
@@ -30,7 +32,11 @@ const DateSelector = ({ baseHref }: { baseHref: string }) => {
 
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const [year, month] = e.target.value.split("-");
-    router.push(`${baseHref}?year=${year}&month=${month}`);
+
+    params.set("year", year);
+    params.set("month", month);
+
+    router.push(`${baseHref}?${params.toString()}`);
   };
 
   return (
@@ -41,8 +47,9 @@ const DateSelector = ({ baseHref }: { baseHref: string }) => {
             ? `${selectedData.year}-${selectedData.month}`
             : ""
         }
-        className="bg-transparent text-lg border p-2 font-bold text-gray-800 mt-2 rounded-lg"
+        className="bg-transparent text-lg border p-2 font-bold text-gray-800 rounded-lg"
         onChange={handleOnChange}
+        onReset={handleOnChange}
         type="month"
         id="date"
       />
