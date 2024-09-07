@@ -1,6 +1,9 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
+import { cookies } from "next/headers";
+
+const token = cookies().get("token");
 
 export async function createTarjeta(formData: FormData) {
   const response = await fetch("http://localhost:8080/api/tarjetas/create", {
@@ -11,6 +14,7 @@ export async function createTarjeta(formData: FormData) {
     }),
     headers: {
       "Content-Type": "application/json",
+      Authorization: `Bearer ${token?.value}`,
     },
   });
 
@@ -28,6 +32,10 @@ export async function deleteTarjeta(id: string) {
     `http://localhost:8080/api/tarjetas/${id}/delete`,
     {
       method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token?.value}`,
+      },
     }
   );
 
@@ -51,6 +59,7 @@ export async function updateTarjeta(
       body: JSON.stringify(updatedTarjeta),
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${token?.value}`,
       },
     }
   );
