@@ -9,7 +9,7 @@ import DeleteButton from "./DeleteButton";
 import { deleteCuota } from "../actions";
 import UpdatePopup from "./update-popup/UpdatePopup";
 import { Cuota } from "@/interfaces/cuota.interface";
-import { tarjetaHandler } from "@/app/tarjetas/components/TarjetasPage";
+import { tarjetaHandler } from "@/app/(dashboard)/tarjetas/components/TarjetasPage";
 import DateSelector from "@/app/components/date-selector/DateSelector";
 import TotalViewer from "@/app/components/total-viewer/TotalViewer";
 import formatDate from "@/utils/formatDate";

@@ -6,7 +6,7 @@ import toast from "react-hot-toast";
 
 import { OptimisticCuota } from "../CuotasPage";
 import { Tarjeta } from "@/interfaces/tarjeta.interface";
-import { tarjetaHandler } from "@/app/tarjetas/components/TarjetasPage";
+import { tarjetaHandler } from "@/app/(dashboard)/tarjetas/components/TarjetasPage";
 
 const CreatePopup = ({
   onClose,

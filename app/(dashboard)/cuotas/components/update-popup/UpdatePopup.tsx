@@ -6,7 +6,7 @@ import { updateCuota } from "../../actions";
 import UpdateButton from "./UpdateButton";
 import { Tarjeta } from "@/interfaces/tarjeta.interface";
 import { Cuota } from "@/interfaces/cuota.interface";
-import { tarjetaHandler } from "@/app/tarjetas/components/TarjetasPage";
+import { tarjetaHandler } from "@/app/(dashboard)/tarjetas/components/TarjetasPage";
 
 const UpdatePopup = ({
   updateOptimistic,

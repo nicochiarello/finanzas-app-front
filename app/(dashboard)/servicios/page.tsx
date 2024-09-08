@@ -46,7 +46,6 @@ const getData = async (
 export default async function Page(request: any) {
   const data = await getData(request);
 
-  console.log(data)
   return (
     <div className="flex flex-col gap-3 w-full h-full">
       <ServiciosPage data={data} />

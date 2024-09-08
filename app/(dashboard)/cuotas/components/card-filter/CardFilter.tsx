@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { tarjetaHandler } from "@/app/tarjetas/components/TarjetasPage";
+import { tarjetaHandler } from "@/app/(dashboard)/tarjetas/components/TarjetasPage";
 import { Tarjeta } from "@/interfaces/tarjeta.interface";
 import { useRouter, useSearchParams } from "next/navigation";
 
