@@ -3,7 +3,7 @@
 import SubmitForm from "./SubmitForm";
 import { login } from "../actions";
 import { useState } from "react";
-import { redirect } from "next/navigation";
+import Link from "next/link";
 
 const LoginForm = () => {
   const [error, setError] = useState("");
@@ -47,9 +47,9 @@ const LoginForm = () => {
         <div className="flex justify-center">
           <p>
             ¿No tienes cuenta?{" "}
-            <a href="#" className="text-blue-500">
+            <Link href="/signup" className="text-blue-500">
               Regístrate
-            </a>
+            </Link>
           </p>
         </div>
       </div>
