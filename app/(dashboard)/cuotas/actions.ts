@@ -5,21 +5,24 @@ import { cookies } from "next/headers";
 
 export async function createCuota(formData: FormData) {
   const token = cookies().get("token");
-  const response = await fetch("http://localhost:8080/api/cuotas/create", {
-    method: "POST",
-    body: JSON.stringify({
-      card: formData.get("card"),
-      title: formData.get("title"),
-      value: Number(formData.get("value")),
-      paid: Number(formData.get("paid")),
-      qty: Number(formData.get("qty")),
-      createdAt: formData.get("createdAt") || new Date().toISOString(),
-    }),
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token?.value}`,
-    },
-  });
+  const response = await fetch(
+    `${process.env.API_HOST}:${process.env.API_PORT}/api/cuotas/create`,
+    {
+      method: "POST",
+      body: JSON.stringify({
+        card: formData.get("card"),
+        title: formData.get("title"),
+        value: Number(formData.get("value")),
+        paid: Number(formData.get("paid")),
+        qty: Number(formData.get("qty")),
+        createdAt: formData.get("createdAt") || new Date().toISOString(),
+      }),
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token?.value}`,
+      },
+    }
+  );
 
   revalidatePath("/cuotas");
 
@@ -33,7 +36,7 @@ export async function createCuota(formData: FormData) {
 export async function deleteCuota(id: string) {
   const token = cookies().get("token");
   const response = await fetch(
-    `http://localhost:8080/api/cuotas/${id}/delete`,
+    `${process.env.API_HOST}:${process.env.API_PORT}/api/cuotas/${id}/delete`,
     {
       method: "DELETE",
       headers: {
@@ -65,7 +68,7 @@ export async function updateCuota(
   };
   const token = cookies().get("token");
   const response = await fetch(
-    `http://localhost:8080/api/cuotas/${id}/update`,
+    `${process.env.API_HOST}:${process.env.API_PORT}/api/cuotas/${id}/update`,
     {
       method: "PATCH",
       body: JSON.stringify(body),

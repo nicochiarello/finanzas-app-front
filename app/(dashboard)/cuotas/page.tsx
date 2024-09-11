@@ -39,13 +39,16 @@ const fetchCuotas = async (
 const fetchTarjetas = async (
   token: string
 ): Promise<{ tarjetas: Tarjeta[]; items: number }> => {
-  const response = await fetch("http://localhost:8080/api/tarjetas/all", {
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
-    cache: "no-store",
-  });
+  const response = await fetch(
+    `${process.env.API_HOST}:${process.env.API_PORT}/api/tarjetas/all`,
+    {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      cache: "no-store",
+    }
+  );
 
   if (!response.ok) {
     throw new Error("Error al cargar las cuotas");
@@ -64,7 +67,7 @@ const getData = async (
   const token = cookieStore.get("token");
 
   const { month, year, card } = request.searchParams;
-  const baseUrl = "http://localhost:8080/api/cuotas/all";
+  const baseUrl = `${process.env.API_HOST}:${process.env.API_PORT}/api/cuotas/all`;
 
   const auxUrl =
     month && year ? `${baseUrl}?month=${month}&year=${year}` : baseUrl;
