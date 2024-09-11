@@ -5,7 +5,7 @@ import { cookies } from "next/headers";
 
 export async function login(formData: FormData) {
   const cookiesStore = cookies();
-  const response = await fetch("http://localhost:8080/auth/login", {
+  const response = await fetch(`${process.env.API_HOST}:${process.env.API_PORT}/auth/login`, {
     method: "POST",
     body: JSON.stringify({
       email: formData.get("email"),
