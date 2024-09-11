@@ -3,9 +3,8 @@
 import { revalidatePath } from "next/cache";
 import { cookies } from "next/headers";
 
-const token = cookies().get("token");
-
 export async function createCuota(formData: FormData) {
+  const token = cookies().get("token");
   const response = await fetch("http://localhost:8080/api/cuotas/create", {
     method: "POST",
     body: JSON.stringify({
@@ -32,6 +31,7 @@ export async function createCuota(formData: FormData) {
 }
 
 export async function deleteCuota(id: string) {
+  const token = cookies().get("token");
   const response = await fetch(
     `http://localhost:8080/api/cuotas/${id}/delete`,
     {
@@ -63,7 +63,7 @@ export async function updateCuota(
     paid: updatedCuota.paid,
     qty: updatedCuota.qty,
   };
-
+  const token = cookies().get("token");
   const response = await fetch(
     `http://localhost:8080/api/cuotas/${id}/update`,
     {

@@ -3,9 +3,8 @@
 import { revalidatePath } from "next/cache";
 import { cookies } from "next/headers";
 
-const token = cookies().get("token");
-
 export async function createTarjeta(formData: FormData) {
+  const token = cookies().get("token");
   const response = await fetch("http://localhost:8080/api/tarjetas/create", {
     method: "POST",
     body: JSON.stringify({
@@ -28,6 +27,7 @@ export async function createTarjeta(formData: FormData) {
 }
 
 export async function deleteTarjeta(id: string) {
+  const token = cookies().get("token");
   const response = await fetch(
     `http://localhost:8080/api/tarjetas/${id}/delete`,
     {
@@ -52,6 +52,7 @@ export async function updateTarjeta(
   id: string,
   updatedTarjeta: Record<string, any>
 ) {
+  const token = cookies().get("token");
   const response = await fetch(
     `http://localhost:8080/api/tarjetas/${id}/update`,
     {
