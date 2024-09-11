@@ -5,12 +5,15 @@ import { cookies } from "next/headers";
 const getData = async (): Promise<{ tarjetas: Tarjeta[]; items: number }> => {
   const cookieStore = cookies();
   const token = cookieStore.get("token");
-  const response = await fetch("http://localhost:8080/api/tarjetas/all", {
-    cache: "no-store",
-    headers: {
-      Authorization: `Bearer ${token?.value}`,
-    },
-  });
+  const response = await fetch(
+    `${process.env.API_HOST}:${process.env.API_PORT}/api/tarjetas/all`,
+    {
+      cache: "no-store",
+      headers: {
+        Authorization: `Bearer ${token?.value}`,
+      },
+    }
+  );
   const data = await response.json();
   return data;
 };
