@@ -6,7 +6,7 @@ import { cookies } from "next/headers";
 export async function createServicio(formData: FormData) {
   const token = cookies().get("token");
   const response = await fetch(
-    `${process.env.API_HOST}:${process.env.API_PORT}/api/servicios/create`,
+    `${process.env.API_URI}/api/servicios/create`,
     {
       method: "POST",
       body: JSON.stringify({
@@ -32,7 +32,7 @@ export async function createServicio(formData: FormData) {
 export async function deleteServicios(id: string) {
   const token = cookies().get("token");
   const response = await fetch(
-    `${process.env.API_HOST}:${process.env.API_PORT}/api/servicios/${id}/delete`,
+    `${process.env.API_URI}/api/servicios/${id}/delete`,
     {
       method: "DELETE",
       headers: {
@@ -57,7 +57,7 @@ export async function updateServicio(
 ) {
   const token = cookies().get("token");
   const response = await fetch(
-    `${process.env.API_HOST}:${process.env.API_PORT}/api/servicios/${id}/update`,
+    `${process.env.API_URI}/api/servicios/${id}/update`,
     {
       method: "PATCH",
       body: JSON.stringify(updatedServicio),

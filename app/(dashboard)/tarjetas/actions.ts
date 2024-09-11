@@ -6,7 +6,7 @@ import { cookies } from "next/headers";
 export async function createTarjeta(formData: FormData) {
   const token = cookies().get("token");
   const response = await fetch(
-    `${process.env.API_HOST}:${process.env.API_PORT}/api/tarjetas/create`,
+    `${process.env.API_URI}/api/tarjetas/create`,
     {
       method: "POST",
       body: JSON.stringify({
@@ -32,7 +32,7 @@ export async function createTarjeta(formData: FormData) {
 export async function deleteTarjeta(id: string) {
   const token = cookies().get("token");
   const response = await fetch(
-    `${process.env.API_HOST}:${process.env.API_PORT}/api/tarjetas/${id}/delete`,
+    `${process.env.API_URI}/api/tarjetas/${id}/delete`,
     {
       method: "DELETE",
       headers: {
@@ -57,7 +57,7 @@ export async function updateTarjeta(
 ) {
   const token = cookies().get("token");
   const response = await fetch(
-    `${process.env.API_HOST}:${process.env.API_PORT}/api/tarjetas/${id}/update`,
+    `${process.env.API_URI}/api/tarjetas/${id}/update`,
     {
       method: "PATCH",
       body: JSON.stringify(updatedTarjeta),

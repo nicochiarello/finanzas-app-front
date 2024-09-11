@@ -35,7 +35,7 @@ const getData = async (
   const token = cookieStore.get("token");
 
   const { month, year } = request.searchParams;
-  const baseUrl = `${process.env.API_HOST}:${process.env.API_PORT}/api/servicios/all`;
+  const baseUrl = `${process.env.API_URI}/api/servicios/all`;
 
   const url =
     month && year ? `${baseUrl}?month=${month}&year=${year}` : baseUrl;

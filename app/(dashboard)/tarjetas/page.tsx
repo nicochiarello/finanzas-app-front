@@ -6,7 +6,7 @@ const getData = async (): Promise<{ tarjetas: Tarjeta[]; items: number }> => {
   const cookieStore = cookies();
   const token = cookieStore.get("token");
   const response = await fetch(
-    `${process.env.API_HOST}:${process.env.API_PORT}/api/tarjetas/all`,
+    `${process.env.API_URI}/api/tarjetas/all`,
     {
       cache: "no-store",
       headers: {

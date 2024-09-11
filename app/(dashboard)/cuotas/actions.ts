@@ -6,7 +6,7 @@ import { cookies } from "next/headers";
 export async function createCuota(formData: FormData) {
   const token = cookies().get("token");
   const response = await fetch(
-    `${process.env.API_HOST}:${process.env.API_PORT}/api/cuotas/create`,
+    `${process.env.API_URI}/api/cuotas/create`,
     {
       method: "POST",
       body: JSON.stringify({
@@ -36,7 +36,7 @@ export async function createCuota(formData: FormData) {
 export async function deleteCuota(id: string) {
   const token = cookies().get("token");
   const response = await fetch(
-    `${process.env.API_HOST}:${process.env.API_PORT}/api/cuotas/${id}/delete`,
+    `${process.env.API_URI}/api/cuotas/${id}/delete`,
     {
       method: "DELETE",
       headers: {
@@ -68,7 +68,7 @@ export async function updateCuota(
   };
   const token = cookies().get("token");
   const response = await fetch(
-    `${process.env.API_HOST}:${process.env.API_PORT}/api/cuotas/${id}/update`,
+    `${process.env.API_URI}/api/cuotas/${id}/update`,
     {
       method: "PATCH",
       body: JSON.stringify(body),

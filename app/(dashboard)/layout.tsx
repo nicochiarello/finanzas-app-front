@@ -8,7 +8,7 @@ async function getMyUser() {
   const cookieStore = cookies();
   const token = cookieStore.get("token");
 
-  const response = await fetch(`${process.env.API_HOST}:${process.env.API_PORT}/users/mine`, {
+  const response = await fetch(`${process.env.API_URI}/users/mine`, {
     cache: "no-store",
     headers: {
       Authorization: `Bearer ${token?.value}`,

@@ -40,7 +40,7 @@ const fetchTarjetas = async (
   token: string
 ): Promise<{ tarjetas: Tarjeta[]; items: number }> => {
   const response = await fetch(
-    `${process.env.API_HOST}:${process.env.API_PORT}/api/tarjetas/all`,
+    `${process.env.API_URI}/api/tarjetas/all`,
     {
       headers: {
         "Content-Type": "application/json",
@@ -67,7 +67,7 @@ const getData = async (
   const token = cookieStore.get("token");
 
   const { month, year, card } = request.searchParams;
-  const baseUrl = `${process.env.API_HOST}:${process.env.API_PORT}/api/cuotas/all`;
+  const baseUrl = `${process.env.API_URI}/api/cuotas/all`;
 
   const auxUrl =
     month && year ? `${baseUrl}?month=${month}&year=${year}` : baseUrl;

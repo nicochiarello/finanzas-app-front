@@ -6,7 +6,7 @@ import { cookies } from "next/headers";
 export async function signup(formData: FormData) {
   const cookiesStore = cookies();
   const response = await fetch(
-    `${process.env.API_HOST}:${process.env.API_PORT}/api/auth/signup`,
+    `${process.env.API_URI}/api/auth/signup`,
     {
       method: "POST",
       body: JSON.stringify({
