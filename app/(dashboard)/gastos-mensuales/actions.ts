@@ -3,27 +3,28 @@
 import { revalidatePath } from "next/cache";
 import { cookies } from "next/headers";
 
-
-
 export async function createGasto(formData: FormData) {
   const token = cookies().get("token");
-  const response = await fetch("http://localhost:8080/api/gastos/create", {
-    method: "POST",
-    body: JSON.stringify({
-      title: formData.get("title"),
-      value: Number(formData.get("value")),
-      createdAt: formData.get("date"),
-    }),
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token?.value}`,
-    },
-  });
+  const response = await fetch(
+    `${process.env.API_HOST}:${process.env.API_PORT}/api/gastos/create`,
+    {
+      method: "POST",
+      body: JSON.stringify({
+        title: formData.get("title"),
+        value: Number(formData.get("value")),
+        createdAt: formData.get("date"),
+      }),
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token?.value}`,
+      },
+    }
+  );
 
   revalidatePath("/gastos-mensuales");
 
   if (!response.ok) {
-    console.log(response)
+    console.log(response);
     return {
       error: "Error al crear el gasto",
     };
@@ -33,7 +34,7 @@ export async function createGasto(formData: FormData) {
 export async function deleteGasto(id: string) {
   const token = cookies().get("token");
   const response = await fetch(
-    `http://localhost:8080/api/gastos/${id}/delete`,
+    `${process.env.API_HOST}:${process.env.API_PORT}/api/gastos/${id}/delete`,
     {
       method: "DELETE",
       headers: {
@@ -58,7 +59,7 @@ export async function updateGasto(
 ) {
   const token = cookies().get("token");
   const response = await fetch(
-    `http://localhost:8080/api/gastos/${id}/update`,
+    `${process.env.API_HOST}:${process.env.API_PORT}/api/gastos/${id}/update`,
     {
       method: "PATCH",
       body: JSON.stringify(updatedGasto),
