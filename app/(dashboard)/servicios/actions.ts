@@ -5,17 +5,20 @@ import { cookies } from "next/headers";
 
 export async function createServicio(formData: FormData) {
   const token = cookies().get("token");
-  const response = await fetch("http://localhost:8080/api/servicios/create", {
-    method: "POST",
-    body: JSON.stringify({
-      title: formData.get("title"),
-      value: Number(formData.get("value")),
-    }),
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token?.value}`,
-    },
-  });
+  const response = await fetch(
+    `${process.env.API_HOST}:${process.env.API_PORT}/api/servicios/create`,
+    {
+      method: "POST",
+      body: JSON.stringify({
+        title: formData.get("title"),
+        value: Number(formData.get("value")),
+      }),
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token?.value}`,
+      },
+    }
+  );
 
   revalidatePath("/servicios");
 
@@ -29,7 +32,7 @@ export async function createServicio(formData: FormData) {
 export async function deleteServicios(id: string) {
   const token = cookies().get("token");
   const response = await fetch(
-    `http://localhost:8080/api/servicios/${id}/delete`,
+    `${process.env.API_HOST}:${process.env.API_PORT}/api/servicios/${id}/delete`,
     {
       method: "DELETE",
       headers: {
@@ -54,7 +57,7 @@ export async function updateServicio(
 ) {
   const token = cookies().get("token");
   const response = await fetch(
-    `http://localhost:8080/api/servicios/${id}/update`,
+    `${process.env.API_HOST}:${process.env.API_PORT}/api/servicios/${id}/update`,
     {
       method: "PATCH",
       body: JSON.stringify(updatedServicio),
