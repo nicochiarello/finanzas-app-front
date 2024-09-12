@@ -1,3 +1,11 @@
+export const metadata = {
+  title: "Signup",
+  description: "Signup page",
+  icons: {
+    icon: "/favicon.png",
+  },
+};
+
 import SignupForm from "./components/SignupForm";
 
 export default async function Page() {
