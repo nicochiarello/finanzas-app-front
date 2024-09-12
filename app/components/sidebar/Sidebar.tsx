@@ -7,6 +7,7 @@ import { sidebarItems } from "./items";
 import { usePathname, useSearchParams } from "next/navigation";
 import { signout } from "./actions";
 import Image from "next/image";
+import { version } from "../../../version";
 
 export default function Sidebar({
   user,
@@ -67,6 +68,7 @@ export default function Sidebar({
             <button type="submit">Signout</button>
           </form>
         </div>
+        <p className="text-xs px-7 text-gray-700 py-2">v{version}</p>
       </div>
     </div>
   );
