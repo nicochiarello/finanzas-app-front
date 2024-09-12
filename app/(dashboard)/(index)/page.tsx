@@ -2,6 +2,7 @@ import { Metadata } from "next";
 import { FaRegCreditCard } from "react-icons/fa";
 import Chart from "./components/Chart";
 import { cookies } from "next/headers";
+import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "Balance",
@@ -11,15 +12,12 @@ export const metadata: Metadata = {
 const getData = async () => {
   const cookieStore = cookies();
   const token = cookieStore.get("token");
-  const response = await fetch(
-    `${process.env.API_URI}/api/balances/mine`,
-    {
-      cache: "no-store",
-      headers: {
-        Authorization: `Bearer ${token?.value}`,
-      },
-    }
-  );
+  const response = await fetch(`${process.env.API_URI}/api/balances/mine`, {
+    cache: "no-store",
+    headers: {
+      Authorization: `Bearer ${token?.value}`,
+    },
+  });
   const data = await response.json();
   return data;
 };
@@ -50,7 +48,10 @@ export default async function Home() {
           </div>
         </div>
         <div className="flex gap-8 h-[14rem] w-full">
-          <div className="w-[26rem] h-full bg-white rounded-xl flex flex-col items-center">
+          <Link
+            href={"/cuotas"}
+            className="w-[26rem] h-full bg-white rounded-xl flex flex-col items-center"
+          >
             <div className="flex w-full justify-between items-center border-b">
               <h5 className="font-semibold p-2">
                 Cuotas de {getCurrentMonth()}
@@ -62,8 +63,11 @@ export default async function Home() {
             <div className="flex flex-1 justify-center items-center">
               <p className="font-semibold text-2xl">${data.cuotas.total}</p>
             </div>
-          </div>
-          <div className="w-[26rem] h-full bg-white rounded-xl flex flex-col items-center">
+          </Link>
+          <Link
+            href={"/servicios"}
+            className="w-[26rem] h-full bg-white rounded-xl flex flex-col items-center"
+          >
             <div className="flex w-full justify-between items-center border-b">
               <h5 className="font-semibold p-2">
                 Servicios de {getCurrentMonth()}
@@ -75,7 +79,7 @@ export default async function Home() {
             <div className="flex flex-1 justify-center items-center">
               <p className="font-semibold text-2xl">${data.servicios.total}</p>
             </div>
-          </div>
+          </Link>
         </div>
       </div>
     </main>
