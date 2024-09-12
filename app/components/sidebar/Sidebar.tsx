@@ -22,10 +22,21 @@ export default function Sidebar({
   const year = searchParams.get("year");
 
   const handleHref = (href: string) => {
+    if (href === "/") {
+      return `${href}`;
+    }
+    if (href === "/tarjetas") {
+      return `${href}`;
+    }
     if (month && year) {
       return `${href}?year=${year}&month=${month}`;
     }
-    return href;
+    const currentMonth = (new Date().getMonth() + 1)
+      .toString()
+      .padStart(2, "0");
+    const currentYear = new Date().getFullYear();
+
+    return `${href}?year=${currentYear}&month=${currentMonth}`;
   };
 
   return (
