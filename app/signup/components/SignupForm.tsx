@@ -34,7 +34,7 @@ const SignupForm = () => {
         <div className="flex flex-col gap-2">
           <label htmlFor="email">Email</label>
           <input
-            type="text"
+            type="email"
             required
             name="email"
             id="email"
@@ -43,12 +43,22 @@ const SignupForm = () => {
           />
         </div>
         <div className="flex flex-col gap-2">
-          <label htmlFor="password">Password</label>
+          <label htmlFor="password">Contraseña</label>
           <input
             type="password"
             placeholder="Contraseña"
             required
             name="password"
+            className="p-2 border border-gray-300 rounded-lg"
+          />
+        </div>
+        <div className="flex flex-col gap-2">
+          <label htmlFor="password">Repite la contraseña</label>
+          <input
+            type="password"
+            placeholder="Repite la contraseña"
+            required
+            name="repeat-password"
             className="p-2 border border-gray-300 rounded-lg"
           />
         </div>
