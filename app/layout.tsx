@@ -1,12 +1,6 @@
 import NextTopLoader from "nextjs-toploader";
 import "./globals.css";
 
-export const metadata = {
-  icons: {
-    icon: "/favicon.png",
-  },
-};
-
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -14,6 +8,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <link rel="icon" href="/favicon.png" />
+      </head>
       <body>
         <NextTopLoader color="#6366f1" />
         {children}

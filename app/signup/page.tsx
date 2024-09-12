@@ -4,9 +4,6 @@ import Logo from '@/public/favicon.png'
 export const metadata = {
   title: "Signup",
   description: "Signup page",
-  icons: {
-    icon: "/favicon.png",
-  },
 };
 
 import SignupForm from "./components/SignupForm";

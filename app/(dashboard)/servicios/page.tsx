@@ -5,9 +5,6 @@ import { Servicio } from "@/interfaces/servicio.interface";
 export const metadata = {
   title: "Servicios",
   description: "Gestiona tus servicios",
-  icons: {
-    icon: "/favicon.png",
-  },
 };
 
 interface RequestParams {

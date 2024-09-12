@@ -5,9 +5,6 @@ import { cookies } from "next/headers";
 export const metadata = {
   title: "Tarjetas",
   description: "Gestiona tus tarjetas",
-  icons: {
-    icon: "/favicon.png",
-  },
 };
 
 const getData = async (): Promise<{ tarjetas: Tarjeta[]; items: number }> => {
