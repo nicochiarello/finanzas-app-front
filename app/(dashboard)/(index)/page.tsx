@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import { FaRegCreditCard } from "react-icons/fa";
+import { FaRegCreditCard, FaRegCalendarCheck } from "react-icons/fa";
 import Chart from "./components/Chart";
 import { cookies } from "next/headers";
 import Link from "next/link";
@@ -73,7 +73,7 @@ export default async function Home() {
                 Servicios de {getCurrentMonth()}
               </h5>
               <div className="px-2">
-                <FaRegCreditCard className="text-xl" />
+                <FaRegCalendarCheck className="text-xl" />
               </div>
             </div>
             <div className="flex flex-1 justify-center items-center">
