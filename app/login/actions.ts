@@ -26,5 +26,5 @@ export async function login(formData: FormData) {
 
   cookiesStore.set("token", token);
 
-  redirect("/gastos-mensuales");
+  redirect("/");
 }

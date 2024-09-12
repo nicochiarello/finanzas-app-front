@@ -34,5 +34,5 @@ export async function signup(formData: FormData) {
 
   cookiesStore.set("token", token);
 
-  redirect("/gastos-mensuales");
+  redirect("/");
 }
