@@ -16,13 +16,13 @@ export async function login(formData: FormData) {
     },
   });
 
+  const jsonResponse = await response.json();
+
   if (response.status !== 201) {
-    throw new Error("Error al iniciar sesión");
+    throw new Error(JSON.stringify(jsonResponse));
   }
 
-  const data = await response.json();
-
-  const token = data.access_token;
+  const token = jsonResponse.access_token;
 
   cookiesStore.set("token", token);
 
