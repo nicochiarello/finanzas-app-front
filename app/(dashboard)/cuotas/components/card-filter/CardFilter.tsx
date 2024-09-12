@@ -40,7 +40,7 @@ const CardFilter = ({ cards }: { cards: Tarjeta[] }) => {
       value={selectedCard}
       onChange={handleOnChange}
     >
-      <option selected value="">Selecciona tu tarjeta</option>
+      <option value="">Selecciona tu tarjeta</option>
       {cards.map((card) => (
         <option key={card._id} value={card._id}>
           {tarjetaHandler(card.brand)} {card.entity}
