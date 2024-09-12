@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Logo from '@/public/favicon.png'
 
 export const metadata = {
   title: "Signup",
@@ -18,7 +19,7 @@ export default async function Page() {
           <div className="w-[5rem] h-[5rem] text-4xl flex items-center justify-center">
             <Image
               className="w-full h-full bg-cover"
-              src="/favicon.png"
+              src={Logo}
               width={400}
               height={400}
               alt="Logo"

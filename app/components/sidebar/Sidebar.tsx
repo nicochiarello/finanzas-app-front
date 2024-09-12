@@ -7,6 +7,7 @@ import { sidebarItems } from "./items";
 import { usePathname, useSearchParams } from "next/navigation";
 import { signout } from "./actions";
 import Image from "next/image";
+import Logo from "@/public/favicon.png";
 import { version } from "../../../version";
 
 export default function Sidebar({
@@ -31,7 +32,7 @@ export default function Sidebar({
     <div className="w-[16rem] h-full flex flex-col gap-8 py-6 bg-white">
       <div className="flex items-center gap-4">
         <h1 className="text-2xl pl-6 font-bold">Finanzas</h1>
-        <Image src="/favicon.png" width={28} height={28} alt="Finanzas app" />
+        <Image src={Logo} width={28} height={28} alt="Finanzas app" />
       </div>
       <nav className="flex-1">
         <ul className="flex flex-col">
