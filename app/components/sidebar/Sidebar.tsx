@@ -37,7 +37,7 @@ export default function Sidebar({
                 href={handleHref(item.href)}
                 className={`px-6 flex gap-6 ${
                   pathname === item.href
-                    ? "bg-zinc-100 py-6 text-indigo-600"
+                    ? "bg-zinc-100 py-6 text-indigo-500"
                     : "py-2"
                 }`}
               >
