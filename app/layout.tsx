@@ -8,9 +8,6 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <head>
-        <link rel="icon" href="/favicon.png" />
-      </head>
       <body>
         <NextTopLoader color="#6366f1" />
         {children}
