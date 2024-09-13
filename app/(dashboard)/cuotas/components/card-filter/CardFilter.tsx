@@ -34,7 +34,7 @@ const CardFilter = ({ cards }: { cards: Tarjeta[] }) => {
 
   return (
     <select
-      className="bg-transparent text-lg h-full border p-2 font-semibold text-gray-800 rounded-lg"
+      className="bg-transparent h-full border p-2 font-semibold rounded-lg"
       name="card"
       id="card"
       value={selectedCard}
