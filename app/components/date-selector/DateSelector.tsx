@@ -9,27 +9,10 @@ const DateSelector = ({ baseHref }: { baseHref: string }) => {
   const router = useRouter();
   const searchParams = useSearchParams();
 
-  const [selectedData, setSelectedData] = React.useState<Record<string, any>>({
-    year: null,
-    month: null,
-  });
-
   const month = searchParams.get("month") || "";
   const year = searchParams.get("year") || "";
 
   const params = new URLSearchParams(searchParams.toString());
-
-  useEffect(() => {
-    let date = null;
-
-    if (month && year) {
-      date = `${year}-${month}`;
-    } else {
-      date = new Date().toISOString().split("T")[0];
-    }
-
-    setSelectedData({ year, month });
-  }, [month, year]);
 
   return (
     <div>
