@@ -14,6 +14,7 @@ import DateSelector from "@/app/components/date-selector/DateSelector";
 import TotalViewer from "@/app/components/total-viewer/TotalViewer";
 import formatDate from "@/utils/formatDate";
 import CardFilter from "./card-filter/CardFilter";
+import MonthPicker from "@/app/components/month-picker/MonthPicker";
 
 export interface OptimisticCuota extends Cuota {
   optimistic?: boolean;

@@ -3,6 +3,7 @@
 import React, { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useSearchParams } from "next/navigation";
+import MonthPicker from "../month-picker/MonthPicker";
 
 const DateSelector = ({ baseHref }: { baseHref: string }) => {
   const router = useRouter();
@@ -30,28 +31,23 @@ const DateSelector = ({ baseHref }: { baseHref: string }) => {
     setSelectedData({ year, month });
   }, [month, year]);
 
-  const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const [year, month] = e.target.value.split("-");
-
-    params.set("year", year);
-    params.set("month", month);
-
-    router.push(`${baseHref}?${params.toString()}`);
-  };
-
   return (
     <div>
-      <input
-        value={
-          selectedData.year && selectedData.month
-            ? `${selectedData.year}-${selectedData.month}`
-            : ""
-        }
-        className="bg-transparent text-lg border p-2 font-bold text-gray-800 rounded-lg"
-        onChange={handleOnChange}
-        onReset={handleOnChange}
-        type="month"
-        id="date"
+      <MonthPicker
+        initialDate={{
+          month: +month,
+          year: +year,
+        }}
+        onDateSelect={(month: number, year: number) => {
+          params.set("year", year.toString());
+          params.set("month", month.toString());
+          router.push(`${baseHref}?${params.toString()}`);
+        }}
+        onClear={() => {
+          params.delete("year");
+          params.delete("month");
+          router.push(`${baseHref}?${params.toString()}`);
+        }}
       />
     </div>
   );

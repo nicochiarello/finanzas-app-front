@@ -31,9 +31,7 @@ export default function Sidebar({
     if (month && year) {
       return `${href}?year=${year}&month=${month}`;
     }
-    const currentMonth = (new Date().getMonth() + 1)
-      .toString()
-      .padStart(2, "0");
+    const currentMonth = (new Date().getMonth() + 1).toString();
     const currentYear = new Date().getFullYear();
 
     return `${href}?year=${currentYear}&month=${currentMonth}`;
