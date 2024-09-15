@@ -18,7 +18,7 @@ const UpdatePopup = ({
   const [data, setData] = useState<Servicio>(servicio);
 
   return (
-    <div className="w-full h-full popup-container-bg absolute z-10 top-0 left-0 flex items-center justify-center">
+    <div className="p-4 w-full h-full popup-container-bg absolute z-10 top-0 left-0 flex items-center justify-center">
       <div className="w-[45rem] h-[35rem] flex flex-col bg-white rounded-lg">
         <div className="flex justify-between items-center p-4 border-b">
           <h2 className="text-xl font-bold">Actualizar Servicio</h2>
