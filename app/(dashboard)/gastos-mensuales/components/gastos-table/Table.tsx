@@ -90,7 +90,7 @@ const Table = ({ data }: { data: { gastos: Gasto[] } }) => {
         <Toaster />
         <div>
           <h1 className="text-2xl font-bold">Gastos Mensuales</h1>
-          <p className="text-lg">Registro de tus gastos mensuales</p>
+          <p className="hidden md:block text-lg">Registro de tus gastos mensuales</p>
         </div>
         <div
           onClick={() => {
