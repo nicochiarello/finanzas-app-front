@@ -40,7 +40,7 @@ export default async function Home() {
       </div>
       <div className="flex flex-1 flex-col rounded-xl">
         <div className="flex-1 flex flex-col rounded-xl mb-3 bg-white">
-          <div className="p-4">
+          <div className="p-2 md:p-4">
             <h3 className="text-xl font-semibold">Gastos mensuales</h3>
           </div>
           <div className="flex-1 py-4">
