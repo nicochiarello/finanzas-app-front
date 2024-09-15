@@ -14,7 +14,7 @@ const CreatePopup = ({
   addOptimistic: (tarjeta: OptimisticServicio) => void;
 }) => {
   return (
-    <div className="w-full h-full popup-container-bg absolute top-0 left-0 flex items-center justify-center">
+    <div className="w-full h-full popup-container-bg absolute z-10 top-0 left-0 flex items-center justify-center">
       <div className="w-[45rem] h-[35rem] flex flex-col bg-white rounded-lg">
         <div className="flex justify-between items-center p-4 border-b">
           <h2 className="text-xl font-bold">Agregar Servicio</h2>

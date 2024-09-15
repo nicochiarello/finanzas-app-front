@@ -85,7 +85,7 @@ const MonthPicker = ({
   return (
     <div
       ref={containerRef as React.RefObject<HTMLDivElement>}
-      className="w-[15rem] relative"
+      className="w-[15rem] relative z-0"
     >
       <div
         onClick={() => setSelectorOpen((prev) => !prev)}
