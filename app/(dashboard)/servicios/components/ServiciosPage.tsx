@@ -91,7 +91,7 @@ const ServiciosPage = ({ data }: { data: { servicios: Servicio[] } }) => {
         <Toaster />
         <div>
           <h1 className="text-2xl font-bold">Servicios</h1>
-          <p className="text-lg">Registro de tus servicios</p>
+          <p className="hidden md:block text-lg">Registro de tus servicios</p>
         </div>
         <div
           onClick={() => {

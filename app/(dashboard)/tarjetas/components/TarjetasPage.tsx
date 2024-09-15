@@ -104,7 +104,7 @@ const TarjetasPage = ({ data }: { data: { tarjetas: Tarjeta[] } }) => {
         <Toaster />
         <div>
           <h1 className="text-2xl font-bold">Tarjetas</h1>
-          <p className="text-lg">Registro de tus tarjetas</p>
+          <p className="hidden md:block text-lg">Registro de tus tarjetas</p>
         </div>
         <div
           onClick={() => {

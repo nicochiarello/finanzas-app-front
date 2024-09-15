@@ -100,7 +100,7 @@ const CuotasPage = ({
         <Toaster />
         <div>
           <h1 className="text-2xl font-bold">Cuotas</h1>
-          <p className="text-lg">Registro de tus cuotas</p>
+          <p className="hidden md:block text-lg">Registro de tus cuotas</p>
         </div>
         <div
           onClick={() => {
@@ -111,7 +111,7 @@ const CuotasPage = ({
           Agregar
         </div>
       </div>
-      <div className="flex gap-4  items-center">
+      <div className="flex flex-col md:flex-row gap-4 md:items-center mt-2 md:mt-0">
         <DateSelector baseHref="/cuotas" />
         <CardFilter cards={data.tarjetas} />
       </div>
