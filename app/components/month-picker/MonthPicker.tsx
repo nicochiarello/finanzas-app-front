@@ -17,10 +17,10 @@ const monthNames = [
   "Diciembre",
 ];
 
-// All years from 2000 to current year
+// All years from 2000 to current year + 1
 const years = Array.from(
   { length: new Date().getFullYear() - 2000 },
-  (_, i) => 2000 + i + 1
+  (_, i) => 2000 + i + 2
 );
 
 const currentYear = new Date().getFullYear();
